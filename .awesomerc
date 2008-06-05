@@ -1,0 +1,226 @@
+screen 0
+{
+    general {
+        resize_hints = no
+        sloppy_focus = no
+        opacity_unfocused = 0.75
+    }
+    styles {
+            normal { font = "segoeui 8" border = "#000000" bg = "#000000" fg = "#00ff00" }
+            focus { font = "segoeui 8" border = "#00ff00" bg = "#000000" fg = "#e71b3c" }
+            urgent { font = "segoeui 8" border = "#00ff00" bg = "#777777" fg = "#e71b3c" }
+    }
+
+    tags
+    {
+        tag 1 { }
+        tag 2 { }
+        tag 3 { }
+        tag 4 { }
+        tag 5 { }
+        tag 6 { }
+        tag 7 { }
+        tag 8 { }
+        tag 9 { }
+    }
+
+    layouts
+    {
+        layout tile { image = "/usr/local/share/awesome/icons/layouts/tilew.png" }
+        layout tileleft { image = "/usr/local/share/awesome/icons/layouts/tileleftw.png" }
+        layout max { image = "/usr/local/share/awesome/icons/layouts/maxw.png" }
+        layout spiral { image = "/usr/local/share/awesome/icons/layouts/spiralw.png" }
+        layout dwindle { image = "/usr/local/share/awesome/icons/layouts/dwindlew.png" }
+        layout floating { image = "/usr/local/share/awesome/icons/layouts/floatingw.png" }
+    }
+
+    statusbar bottombar
+    {
+        position = "left"
+        height = 16
+
+        iconbox lastfm
+        {
+            image = "/home/matt/icons/1.gif"
+            resize = true
+            mouse {   button = "1" command = "spawn" args = {"lastfm"} }
+        }
+        iconbox listen
+        {
+            image = "/home/matt/icons/2.gif"
+            resize = true
+            mouse {   button = "1" command = "spawn" args = {"amarok"} }
+        }
+        iconbox firefox
+        {
+            image = "/home/matt/icons/3.gif"
+            resize = true
+            mouse {   button = "1" command = "spawn" args = {"firefox3"} }
+        }
+        iconbox urxvt
+        {
+            image = "/home/matt/icons/4.gif"
+            resize = true
+            mouse {   button = "1" command = "spawn" args = {"urxvt -fa monotype.com -fs 8"} }
+        }
+        textbox email 
+        {
+            align = "right"
+            text = "0 Mails "
+        }
+    }
+    statusbar mystatusbar
+    {
+        position = "top"
+        height = 16
+
+        taglist mytaglist
+        {
+            mouse { button = "1" command = "tag_view" }
+            mouse { button = "1" modkey = {"Mod4"} command = "client_tag" }
+            mouse { button = "3" command = "tag_toggleview" }
+            mouse { button = "3" modkey = {"Mod4"} command = "client_toggletag" }
+        }
+        layoutinfo mylayoutinfo
+        {
+            mouse { button = "1" command = "tag_setlayout" args = {"+1"} }
+            mouse { button = "3" command = "tag_setlayout" args = {"-1"} }
+            mouse { button = "4" command = "tag_setlayout" args = {"+1"} }
+            mouse { button = "5" command = "tag_setlayout" args = {"-1"} }
+        }
+        tasklist mytasklist
+        {
+            mouse { button = "4" command = "client_focus" args={"+1"}}
+            mouse { button = "5" command = "client_focus" args={"-1"}}
+            mouse { modkey = {"Mod4"} button = "4" command = "client_swapnext" }
+            mouse { modkey = {"Mod4"} button = "5" command = "client_swapprev" }
+        }
+        textbox date 
+        {
+            text = "datatata"
+        }
+        progressbar mixer 
+        {
+            data "mixer" {  bordercolor = "#006e96" fg = "#000000" bg = "#ff0000" fg_center= "#daaf0a" fg_end = "#ff0000"}
+            width = "60" height = "0.8" 
+            align = "right"
+            mouse { button = "2" command = "spawn" args = {"amixer set PCM 0; echo 0 widget_tell mixer data mixer 0 | awesome-client"} }
+            mouse { button = "4" command = "spawn" args = {"~/bin/upper_vol.sh"} }
+            mouse { button = "5" command = "spawn" args = {"~/bin/lower_vol.sh"} }
+        }
+        graph performance 
+        {
+            data cpu { scale = "true" max = 100 fg="#ffbbaa" }
+            width = 40
+            align = "right"
+        }
+    }
+}
+
+rules
+{
+    rule { name = "Gimp" float = true }
+    rule { name = "MPlayer" float = true }
+    rule { name = "Buddy List" float = true }
+    rule { name = "Acroread" float = true }
+    rule { name = "pinentry" float = true }
+    rule { name = "xmms" float = true }
+    rule { name = "pidgin" float = true }
+    rule { name = "Vimperator" tags="" }
+    rule { name = "Listen" tags="8" }
+}
+
+mouse
+{
+    root { button = "3" command = "spawn" args = "exec urxvt" }
+    client { modkey = {"Mod4"} button = "1" command = "client_movemouse" }
+    client { modkey = {"Mod4"} button = "2" command = "client_zoom" }
+    client { modkey = {"Mod4"} button = "3" command = "client_resizemouse" }
+}
+
+keys
+{
+    key { modkey = {"Mod4"} key = "Return" command = "spawn" args = {"exec dmenu_do"} }
+    key { modkey = {"Mod4"} key = "d" command = "spawn" args = {"~/bin/dico.sh"} }
+    key { modkey = {"Mod4"} key = "c" command = "spawn" args = {"~/bin/cal.sh"} }
+    key { modkey = {"Mod4"} key = "s" command = "spawn" args = {"listen --play-pause"} }
+    key { modkey = {"Mod4"} key = "f" command = "client_togglefloating" }
+    key { modkey = {"Mod4"} key = "t" command = "client_settrans" args=50 }
+    key { modkey = {"Mod4"} key = "y" command = "client_settrans" args=100 } 
+    key { key = "XF86AudioRaiseVolume" command = "spawn" args = {"~/bin/lower_vol.sh"} }
+    key { key = "XF86AudioLowerVolume" command = "spawn" args = {"~/bin/upper_vol.sh"} }
+    key { key = "XF86AudioMute" command = "spawn" args = {"amixer set PCM 0"} }
+    key { key = "XF86Spell" command = "spawn" args = {"firefox3"} }
+    key { key = "XF86Music" command = "spawn" args = {"urxvt"} }
+    key { modkey = {"Mod4", "Shift"} key = "Return" command = "exec" args = {"awesome"} }
+    key { modkey = {"Mod4"} key = "space" command = "tag_setlayout" args = {"+1"} }
+    key { modkey = {"Mod4", "Shift"} key = "space" command = "tag_setlayout" args = {"-1"} }
+    key { modkey = {"Mod4"} key = "b" command = "statusbar_toggle" }
+    key { modkey = {"Mod4"} key = "j" command = "client_focus" args={"+1"}}
+    key { modkey = {"Mod4"} key = "k" command = "client_focus" args={"-1"}}
+    key { modkey = {"Mod4"} key = "Tab" command = "focus_history" args = {"-1"} }
+    key { modkey = {"Mod4", "Shift"} key = "j" command = "client_swapnext" }
+    key { modkey = {"Mod4", "Shift"} key = "k" command = "client_swapprev" } 
+    key { modkey = {"Mod4", "Control"} key = "j" command = "screen_focus" args = {"+1"} }
+    key { modkey = {"Mod4", "Control"} key = "k" command = "screen_focus" args = {"-1"} }
+    key { modkey = {"Mod4"} key = "h" command = "tag_setmwfact" args = {"-0.05"} }
+    key { modkey = {"Mod4"} key = "l" command = "tag_setmwfact" args = {"+0.05"} }
+    key { modkey = {"Mod4", "Shift"} key = "h" command = "tag_setnmaster" args = {"+1"} }
+    key { modkey = {"Mod4", "Shift"} key = "l" command = "tag_setnmaster" args = {"-1"} }
+    key { modkey = {"Mod4", "Control"} key = "h" command = "tag_setncol" args = {"+1"} }
+    key { modkey = {"Mod4", "Control"} key = "l" command = "tag_setncol" args = {"-1"} }
+    key { modkey = {"Mod4"} key = "Left" command = "tag_viewprev" }
+    key { modkey = {"Mod4"} key = "Right" command = "tag_viewnext" }
+    key { modkey = {"Mod4"} key = "m" command = "client_togglemax"}
+    key { modkey = {"Mod4", "Control"} key = "Return" command = "client_zoom" }
+    key { modkey = {"Mod4", "Control"} key = "space" command = "client_setfloating" }
+    key { modkey = {"Mod4", "Shift"} key = "c" command = "client_kill" }
+    key { modkey = {"Mod4", "Shift"} key = "q" command = "quit" }
+    key { modkey = {"Mod4", "Control"} key = "r" command = "exec" args = {"awesome"} }
+    key { modkey = {"Mod4"} key = "0" command = "tag_view" }
+    key { modkey = {"Mod4", "Control"} key = "0" command = "tag_toggleview" }
+    key { modkey = {"Mod4", "Shift"} key = "0" command = "client_tag" }
+    key { modkey = {"Mod4", "Shift", "Control"} key = "0" command = "client_toggletag" }
+    key { modkey = {"Mod4"} key = "0" command = "tag_view" }
+    key { modkey = {"Mod4"} key = "0" command = "tag_view" }
+    key { modkey = {"Mod4"} key = "1" command = "tag_view" args = {"1"} }
+    key { modkey = {"Mod4"} key = "2" command = "tag_view" args = {"2"} }
+    key { modkey = {"Mod4"} key = "3" command = "tag_view" args = {"3"} }
+    key { modkey = {"Mod4"} key = "4" command = "tag_view" args = {"4"} }
+    key { modkey = {"Mod4"} key = "5" command = "tag_view" args = {"5"} }
+    key { modkey = {"Mod4"} key = "6" command = "tag_view" args = {"6"} }
+    key { modkey = {"Mod4"} key = "7" command = "tag_view" args = {"7"} }
+    key { modkey = {"Mod4"} key = "8" command = "tag_view" args = {"8"} }
+    key { modkey = {"Mod4"} key = "9" command = "tag_view" args = {"9"} }
+    key { modkey = {"Mod4"} key = "0" command = "tag_toggleview" }
+    key { modkey = {"Mod4", "Control"} key = "0" command = "tag_toggleview" }
+    key { modkey = {"Mod4", "Control"} key = "1" command = "tag_toggleview" args = {"1"} }
+    key { modkey = {"Mod4", "Control"} key = "2" command = "tag_toggleview" args = {"2"} }
+    key { modkey = {"Mod4", "Control"} key = "3" command = "tag_toggleview" args = {"3"} }
+    key { modkey = {"Mod4", "Control"} key = "4" command = "tag_toggleview" args = {"4"} }
+    key { modkey = {"Mod4", "Control"} key = "5" command = "tag_toggleview" args = {"5"} }
+    key { modkey = {"Mod4", "Control"} key = "6" command = "tag_toggleview" args = {"6"} }
+    key { modkey = {"Mod4", "Control"} key = "7" command = "tag_toggleview" args = {"7"} }
+    key { modkey = {"Mod4", "Control"} key = "8" command = "tag_toggleview" args = {"8"} }
+    key { modkey = {"Mod4", "Control"} key = "9" command = "tag_toggleview" args = {"9"} }
+    key { modkey = {"Mod4", "Shift"} key = "0" command = "client_tag" }
+    key { modkey = {"Mod4", "Shift"} key = "1" command = "client_tag" args = {"1"} }
+    key { modkey = {"Mod4", "Shift"} key = "2" command = "client_tag" args = {"2"} }
+    key { modkey = {"Mod4", "Shift"} key = "3" command = "client_tag" args = {"3"} }
+    key { modkey = {"Mod4", "Shift"} key = "4" command = "client_tag" args = {"4"} }
+    key { modkey = {"Mod4", "Shift"} key = "5" command = "client_tag" args = {"5"} }
+    key { modkey = {"Mod4", "Shift"} key = "6" command = "client_tag" args = {"6"} }
+    key { modkey = {"Mod4", "Shift"} key = "7" command = "client_tag" args = {"7"} }
+    key { modkey = {"Mod4", "Shift"} key = "8" command = "client_tag" args = {"8"} }
+    key { modkey = {"Mod4", "Shift"} key = "9" command = "client_tag" args = {"9"} }
+    key { modkey = {"Mod4", "Shift", "Control"} key = "0" command = "client_toggletag" }
+    key { modkey = {"Mod4", "Shift", "Control"} key = "1" command = "client_toggletag" args = {"1"} }
+    key { modkey = {"Mod4", "Shift", "Control"} key = "2" command = "client_toggletag" args = {"2"} }
+    key { modkey = {"Mod4", "Shift", "Control"} key = "3" command = "client_toggletag" args = {"3"} }
+    key { modkey = {"Mod4", "Shift", "Control"} key = "4" command = "client_toggletag" args = {"4"} }
+    key { modkey = {"Mod4", "Shift", "Control"} key = "5" command = "client_toggletag" args = {"5"} }
+    key { modkey = {"Mod4", "Shift", "Control"} key = "6" command = "client_toggletag" args = {"6"} }
+    key { modkey = {"Mod4", "Shift", "Control"} key = "7" command = "client_toggletag" args = {"7"} }
+    key { modkey = {"Mod4", "Shift", "Control"} key = "8" command = "client_toggletag" args = {"8"} }
+    key { modkey = {"Mod4", "Shift", "Control"} key = "9" command = "client_toggletag" args = {"9"} }
+}
