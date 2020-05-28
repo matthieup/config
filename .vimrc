@@ -55,3 +55,11 @@ autocmd BufNewFile *.txt echo 'Hello world'
 let g:go_fmt_command = "goimports"    " Run goimports along gofmt on each save     
 let g:go_auto_type_info = 1           " Automatically get signature/type info for object under cursor
 au filetype go inoremap <buffer> . .<C-x><C-o>
+
+" solarized - toggle bg with <leader>g
+syntax enable
+let g:solarized_contrast = "high"
+set background=dark
+colorscheme solarized
+let g:solarized_termcolors=256
+call togglebg#map("<leader>g")
