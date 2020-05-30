@@ -1,0 +1,47 @@
+# Config from github
+---
+- hosts: localhost
+  connection: local
+  become: yes
+
+  vars:
+    repo_url: https://github.com/matthieup/config
+    config_dir: /tmp/configansible
+  tasks:
+    - name: get config repository from github
+      git: 
+        repo: "{{ repo_url }}"
+        dest: "{{ config_dir }}"
+        version: master
+
+    - name: copy ssh key from yubikey
+      authorized_key:
+        user: pi 
+        state: present
+        key: "{{ lookup('file', '/tmp/configansible/yubikey-ssh-pub') }}"
+
+    - name: copy vimrc
+      copy:
+        src: "{{ config_dir }}/.vimrc"
+        dest: "/home/pi/.vimrc"
+        owner: pi
+        group: pi
+        mode: 0660
+
+    - name: get vundle
+      git:
+        repo: "https://github.com/VundleVim/Vundle.vim.git"
+        dest: "/home/pi/.vim/bundle/Vundle.vim"
+        version: master 
+
+    - name: chown vim
+      command: chown -R pi:pi /home/pi/.vim 
+      args:
+        warn: no
+
+    - name: get plugins
+      command: vim +PluginInstall +qall
+      become: yes
+      become_user: pi
+      args:
+        stdin: "\n"
