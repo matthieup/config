@@ -63,3 +63,9 @@ set background=dark
 colorscheme solarized
 let g:solarized_termcolors=256
 call togglebg#map("<leader>g")
+
+"omnifunc completion
+set completeopt=longest,menuone
+set completeopt+=preview
+" close scratch on completion
+autocmd CompleteDone * pclose

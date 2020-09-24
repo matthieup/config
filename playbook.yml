@@ -2,12 +2,20 @@
 ---
 - hosts: localhost
   connection: local
-  become: yes
 
   vars:
     repo_url: https://github.com/matthieup/config
     config_dir: /tmp/configansible
+
+
   tasks:
+    - name: install my packages
+      package: "{{ item }}"
+      with_items:
+        - vim
+        - powerline
+      become: yes
+
     - name: get config repository from github
       git: 
         repo: "{{ repo_url }}"
@@ -32,10 +40,10 @@
       git:
         repo: "https://github.com/VundleVim/Vundle.vim.git"
         dest: "/home/pi/.vim/bundle/Vundle.vim"
-        version: master 
+        version: master
 
     - name: chown vim
-      command: chown -R pi:pi /home/pi/.vim 
+      command: chown -R pi /home/pi/.vim
       args:
         warn: no
 
@@ -45,3 +53,7 @@
       become_user: pi
       args:
         stdin: "\n"
+
+  post_tasks:
+    - name: Remove config files
+      file: path="{{ config_dir }}" state=absent
