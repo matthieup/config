@@ -10,11 +10,11 @@
 
   tasks:
     - name: install my packages
-      package: "{{ item }}"
-      with_items:
-        - vim
-        - powerline
-      become: yes
+      package:
+         name:
+           - vim
+           - powerline
+         state: latest
 
     - name: get config repository from github
       git: 
@@ -24,33 +24,33 @@
 
     - name: copy ssh key from yubikey
       authorized_key:
-        user: pi 
+        user: "{{ user }}" 
         state: present
         key: "{{ lookup('file', '/tmp/configansible/yubikey-ssh-pub') }}"
 
     - name: copy vimrc
       copy:
         src: "{{ config_dir }}/.vimrc"
-        dest: "/home/pi/.vimrc"
-        owner: pi
-        group: pi
+        dest: "/home/{{ user }}/.vimrc"
+        owner: "{{ user }}"
+        group: "{{ user }}"
         mode: 0660
 
     - name: get vundle
       git:
         repo: "https://github.com/VundleVim/Vundle.vim.git"
-        dest: "/home/pi/.vim/bundle/Vundle.vim"
+        dest: "/home/{{ user }}/.vim/bundle/Vundle.vim"
         version: master
 
     - name: chown vim
-      command: chown -R pi /home/pi/.vim
+      command: "chown -R {{ user }} /home/{{ user }}/.vim"
       args:
         warn: no
 
     - name: get plugins
       command: vim +PluginInstall +qall
       become: yes
-      become_user: pi
+      become_user: "{{ user }}"
       args:
         stdin: "\n"
 
