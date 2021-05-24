@@ -6,6 +6,7 @@
   vars:
     repo_url: https://github.com/matthieup/config
     config_dir: /tmp/configansible
+    user: matt
 
 
   tasks:
@@ -15,6 +16,7 @@
            - vim
            - powerline
          state: latest
+      become: true
 
     - name: get config repository from github
       git: 
